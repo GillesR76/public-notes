@@ -6,7 +6,6 @@
 <title>Skills, Commands, Plugins & Configuration — Écosystème Claude v2</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -833,5 +832,16 @@
   </footer>
 
 </div>
+
+<script>
+document.fonts.ready.then(function() {
+  // Force SVG reflow after fonts are loaded
+  document.querySelectorAll('svg').forEach(function(svg) {
+    svg.style.display = 'none';
+    svg.offsetHeight; // trigger reflow
+    svg.style.display = '';
+  });
+});
+</script>
 </body>
 </html>
