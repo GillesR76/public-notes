@@ -323,11 +323,19 @@
   }
 
   /* ── Table ── */
+  html { overflow-x: hidden; }
   table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13.5px;
     margin: 1.25rem 0;
+  }
+  @media (max-width: 640px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
   th {
     text-align: left;
