@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills, Commands, Plugins & Configuration — Écosystème Claude v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #F7F4F0;
+    --surface:     #FFFFFF;
+    --border:      #E2DDD8;
+    --divider:     #D4CEC9;
+    --text-1:      #0D1B2A;
+    --text-2:      #6B5F57;
+    --text-3:      #A89E97;
+    --navy:        #0D1B2A;
+    --accent:      #8B4A2F;
+    --accent-mid:  #C17A5A;
+    --accent-bg:   #F5EDE8;
+    --draft-bg:    #F5EDE8;
+    --draft-text:  #8B4A2F;
+    --draft-border:#C17A5A;
+    --code-bg:     #EDE8E3;
+    --code-border: #E2DDD8;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text-1);
+    line-height: 1.75;
+    font-size: 14.5px;
+    padding: 3rem 2rem;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1.5px solid var(--navy);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .badge-draft  { background: var(--draft-bg);  color: var(--draft-text);  border: 0.5px solid var(--draft-border); }
+  .badge-review { background: #FDF6F0; color: #C17A5A; border: 0.5px solid #C17A5A; }
+  .badge-final  { background: var(--navy); color: #F7F4F0; }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .header-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .sub {
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: 300;
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+  .meta-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    white-space: nowrap;
+    display: flex;
+    gap: 1rem;
+  }
+
+  /* ── TOC statique (mode print) ── */
+  .toc {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.75rem;
+  }
+  .toc ol {
+    padding-left: 1.2rem;
+    color: var(--text-2);
+    line-height: 2;
+    font-size: 13px;
+  }
+  .toc a { color: var(--accent-mid); text-decoration: none; }
+
+  /* ── Sections ── */
+  section {
+    margin-bottom: 4rem;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    flex-shrink: 0;
+  }
+  section h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .prose {
+    font-size: 14.5px;
+    color: var(--text-2);
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+
+  /* Inline correction/new badges */
+  .corr {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: #FDF0ED;
+    color: var(--accent);
+    border: 0.5px solid var(--accent);
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .new {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 0.5px solid var(--accent-mid);
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ── Diagram ── */
+  .diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+  }
+  .diagram svg {
+    display: block;
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 12px;
+    color: var(--text-2);
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ── Keypoint ── */
+  .keypoint {
+    background: var(--accent-bg);
+    border-left: 2.5px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 0.875rem 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .keypoint p { font-size: 0.875rem; color: var(--text-2); margin-bottom: 0.4rem; }
+  .keypoint p:last-child { margin-bottom: 0; }
+  .keypoint strong { color: var(--accent); font-weight: 500; }
+
+  /* ── Callout ── */
+  .callout {
+    background: #FDF6F0;
+    border: 0.5px solid var(--accent-mid);
+    border-radius: 8px;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.875rem;
+    color: var(--text-2);
+    margin: 1.25rem 0;
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--accent); font-weight: 500; }
+
+  /* ── Callout warn ── */
+  .callout.warn {
+    background: #FDF0ED;
+    border: none;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* ── Code ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 8px;
+    margin: 1.25rem 0;
+    overflow: hidden;
+  }
+  .code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-bottom: 1px solid var(--code-border);
+  }
+  .code-block pre {
+    margin: 0;
+    padding: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--text-1);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--text-1);
+  }
+
+  /* ── Table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 1.25rem 0;
+  }
+  th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding: 0.6rem 0.875rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  td {
+    padding: 0.65rem 0.875rem;
+    color: var(--text-2);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--text-1); font-weight: 500; }
+
+  /* ── Steps ── */
+  .steps {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1.25rem 0;
+    flex-wrap: wrap;
+  }
+  .step {
+    flex: 1;
+    min-width: 160px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.3rem;
+  }
+  .step-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+  .step-desc {
+    font-size: 12.5px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+  .step.navy   { border-top: 2.5px solid var(--navy); }
+  .step.accent { border-top: 2.5px solid var(--accent); }
+  .step.mid    { border-top: 2.5px solid var(--accent-mid); }
+  .step.gray   { border-top: 2.5px solid var(--text-3); }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media print {
+    .toc { display: none; }
+    .page { max-width: 100%; padding: 0; }
+    header { border-bottom: 1.5px solid #0D1B2A; }
+    body { font-size: 13px; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="header-top">
+      <div class="tag">NOTE DE RÉFÉRENCE · ÉCOSYSTÈME CLAUDE</div>
+    </div>
+    <h1>Skills, Commands, Plugins<br>&amp; Configuration dans l'écosystème Claude</h1>
+    <div class="header-meta">
+      <span class="sub">Architecture complète, distinctions par environnement (Chat, Cowork, Claude Code), CLAUDE.md vs instructions de projet.</span>
+      <span class="meta-right">
+        <span class="date">2 avril 2026</span>
+      </span>
+    </div>
+  </header>
+
+  <div class="toc">
+    <div class="toc-label">Sommaire</div>
+    <ol>
+      <li><a href="#s01">Architecture en trois couches — Chat &amp; Cowork</a></li>
+      <li><a href="#s02">Commands — définition précise</a></li>
+      <li><a href="#s03">Déclenchement — auto vs explicite</a></li>
+      <li><a href="#s04">CLAUDE.md vs instructions de projet</a></li>
+      <li><a href="#s05">Notion de "projet" selon l'environnement</a></li>
+      <li><a href="#s06">Interfaces Claude Code — terminal vs IDE</a></li>
+      <li><a href="#s07">Skills, Commands &amp; Extensions dans Claude Code</a></li>
+      <li><a href="#s08">Tableau comparatif — trois environnements</a></li>
+      <li><a href="#s09">Choisir le bon environnement selon la tâche</a></li>
+    </ol>
+  </div>
+
+  <!-- S01 -->
+  <section id="s01">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h2>Architecture en trois couches — Chat &amp; Cowork</h2>
+    </div>
+    <p class="prose">Dans les interfaces Chat et Cowork, trois couches s'emboîtent. Cette architecture est propre à ces deux environnements — Claude Code a son propre système (voir section 07).</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#A89E97" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <!-- Plugin container -->
+        <rect x="10" y="10" width="800" height="150" rx="14" fill="#E8EAF0" stroke="#4A5480" stroke-width="0.8"/>
+        <text x="410" y="38" text-anchor="middle" font-size="14" font-weight="600" fill="#4A5480">Plugin (Chat / Cowork)</text>
+        <text x="410" y="56" text-anchor="middle" font-size="12" fill="#6B5F57">Bundle déployable — stocké localement, partageable en zip ou GitHub</text>
+        <!-- Skills -->
+        <rect x="30" y="70" width="220" height="74" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="140" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Skills</text>
+        <text x="140" y="114" text-anchor="middle" font-size="11" fill="#6B5F57">SKILL.md — expertise domaine</text>
+        <text x="140" y="130" text-anchor="middle" font-size="11" fill="#6B5F57">auto-déclenchées par description</text>
+        <!-- Connectors -->
+        <rect x="270" y="70" width="220" height="74" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="380" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Connectors</text>
+        <text x="380" y="114" text-anchor="middle" font-size="11" fill="#6B5F57">MCP servers, browser MCP</text>
+        <text x="380" y="130" text-anchor="middle" font-size="11" fill="#6B5F57">fichiers locaux, APIs</text>
+        <!-- Commands -->
+        <rect x="510" y="70" width="280" height="74" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
+        <text x="650" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#8B4A2F">Commands (slash)</text>
+        <text x="650" y="114" text-anchor="middle" font-size="11" fill="#6B5F57">Prompts réutilisables — /nom</text>
+        <text x="650" y="130" text-anchor="middle" font-size="11" fill="#6B5F57">peuvent orchestrer N skills</text>
+        <!-- Arrows -->
+        <line x1="140" y1="160" x2="140" y2="195" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a1)"/>
+        <line x1="650" y1="160" x2="650" y2="195" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a1)"/>
+        <text x="410" y="190" text-anchor="middle" font-size="10.5" fill="#A89E97">Zoom sur les deux composants clés</text>
+        <!-- Skill anatomy -->
+        <rect x="10" y="200" width="360" height="220" rx="12" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="190" y="226" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Anatomie d'une skill</text>
+        <rect x="28" y="236" width="324" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="190" y="252" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">SKILL.md</text>
+        <text x="190" y="264" text-anchor="middle" font-size="11" fill="#6B5F57">frontmatter description + instructions</text>
+        <rect x="28" y="278" width="155" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="106" y="298" text-anchor="middle" font-size="11" font-weight="600" fill="#0D1B2A">References/</text>
+        <text x="106" y="310" text-anchor="middle" font-size="10" fill="#6B5F57">exemples, docs</text>
+        <rect x="192" y="278" width="160" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="272" y="298" text-anchor="middle" font-size="11" font-weight="600" fill="#0D1B2A">Scripts/</text>
+        <text x="272" y="310" text-anchor="middle" font-size="10" fill="#6B5F57">code exécutable</text>
+        <rect x="28" y="320" width="324" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="190" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Sub-agents (optionnel)</text>
+        <text x="190" y="352" text-anchor="middle" font-size="11" fill="#6B5F57">exécution isolée en contexte fork</text>
+        <text x="190" y="388" text-anchor="middle" font-size="11" fill="#6B5F57">Déclenchement auto par correspondance description</text>
+        <text x="190" y="404" text-anchor="middle" font-size="11" fill="#6B5F57">OU déclenchement explicite /slash</text>
+        <!-- Command anatomy -->
+        <rect x="460" y="200" width="350" height="220" rx="12" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
+        <text x="635" y="226" text-anchor="middle" font-size="13" font-weight="600" fill="#8B4A2F">Anatomie d'un command</text>
+        <rect x="478" y="236" width="314" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="635" y="252" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Fichier .md</text>
+        <text x="635" y="264" text-anchor="middle" font-size="11" fill="#6B5F57">prompt réutilisable — tâche nommée</text>
+        <rect x="478" y="278" width="314" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="635" y="294" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Peut invoquer skill A → skill B → skill C</text>
+        <text x="635" y="308" text-anchor="middle" font-size="11" fill="#6B5F57">orchestration optionnelle</text>
+        <rect x="478" y="320" width="314" height="32" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="635" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Slash command</text>
+        <text x="635" y="352" text-anchor="middle" font-size="11" fill="#6B5F57">/repurposing, /call-prep, /release…</text>
+        <text x="635" y="388" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Cowork : commands/ du plugin</text>
+        <text x="635" y="404" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Code : .claude/commands/ — voir §07</text>
+      </svg>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4A5480"></div>Plugin (bundle)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8B4A2F"></div>Skill (atomique)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C17A5A"></div>Command (prompt réutilisable ± orchestrateur)</div>
+    </div>
+  </section>
+
+  <!-- S02 -->
+  <section id="s02">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h2>Commands — définition précise</span></h2>
+    </div>
+    <p class="prose">Un command est un fichier <code>.md</code> stocké dans <code>commands/</code> qui encapsule une tâche nommée, déclenchable via <code>/nom</code>. Son contenu est du langage naturel décrivant la tâche à accomplir — il peut être aussi simple qu'un paragraphe, ou aussi structuré qu'une séquence ordonnée invoquant plusieurs skills. Le slash command est le mécanisme de déclenchement ; l'orchestration de skills est un usage avancé, non une propriété intrinsèque.</p>
+
+    <table>
+      <thead>
+        <tr><th>Propriété</th><th>Valeur</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Format</td><td>Fichier <code>.md</code> — contenu en langage naturel / markdown</td></tr>
+        <tr><td>Déclenchement</td><td>Slash command explicite : <code>/nom-du-command</code></td></tr>
+        <tr><td>Contenu minimal</td><td>Prompt décrivant une tâche — sans référence à des skills</td></tr>
+        <tr><td>Contenu avancé</td><td>Prompt qui invoque explicitement skill A, puis skill B, puis skill C en séquence</td></tr>
+        <tr><td>Localisation Chat/Cowork</td><td><code>commands/</code> dans le dossier plugin</td></tr>
+        <tr><td>Localisation Claude Code</td><td><code>.claude/commands/nom.md</code> — voir section 07</td></tr>
+        <tr><td>Disponibilité sans plugin</td><td>Chat/Cowork : non (doit être dans un plugin). Claude Code : oui (dossier local).</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Distinction clé :</strong> un command simple (<code>/summarize</code>) peut être un unique paragraphe de prompt. Un command orchestrateur (<code>/linkedin-post</code>) sera un fichier structuré listant les skills à charger et l'ordre d'exécution. Les deux formats coexistent.
+    </div>
+  </section>
+
+  <!-- S03 -->
+  <section id="s03">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h2>Déclenchement — auto vs explicite (Chat &amp; Cowork)</h2>
+    </div>
+    <p class="prose">Le déclenchement d'une skill repose sur la correspondance entre la requête de l'utilisateur et la description dans le frontmatter <code>SKILL.md</code>. Le déclenchement d'un command est toujours explicite.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#A89E97" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <text x="390" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="#0D1B2A">Deux chemins de déclenchement</text>
+        <!-- Auto -->
+        <rect x="30" y="44" width="330" height="64" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="195" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Déclenchement automatique</text>
+        <text x="195" y="86" text-anchor="middle" font-size="11" fill="#6B5F57">Requête en langage naturel</text>
+        <text x="195" y="100" text-anchor="middle" font-size="11" fill="#6B5F57">Claude matche la description de la skill</text>
+        <!-- Explicit -->
+        <rect x="420" y="44" width="330" height="64" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
+        <text x="585" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#8B4A2F">Déclenchement explicite</text>
+        <text x="585" y="86" text-anchor="middle" font-size="11" fill="#6B5F57">/nom-du-command</text>
+        <text x="585" y="100" text-anchor="middle" font-size="11" fill="#6B5F57">ou appel explicite d'une skill dans le prompt</text>
+        <!-- Arrows -->
+        <line x1="195" y1="108" x2="195" y2="140" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a2)"/>
+        <line x1="585" y1="108" x2="585" y2="140" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a2)"/>
+        <!-- Examples auto -->
+        <rect x="30" y="142" width="330" height="56" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="195" y="180" text-anchor="middle" font-size="11" fill="#6B5F57">"peux tu analyser ce document et me faire une note de synthèse"</text>
+        <text x="195" y="196" text-anchor="middle" font-size="11" font-weight="500" fill="#6B5F57">→ skills chargées si description correspond</text>
+        <!-- Examples explicit -->
+        <rect x="420" y="142" width="330" height="56" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="585" y="164" text-anchor="middle" font-size="11" fill="#6B5F57">/repurposing → command chargé</text>
+        <text x="585" y="180" text-anchor="middle" font-size="11" fill="#6B5F57">/linkedin-writer → skill directement</text>
+        <text x="585" y="196" text-anchor="middle" font-size="11" font-weight="500" fill="#6B5F57">→ command peut chaîner N skills</text>
+        <!-- Warning callout -->
+        <rect x="30" y="218" width="720" height="28" rx="6" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.5"/>
+        <text x="390" y="236" text-anchor="middle" font-size="11" fill="#6B5F57">Requête générique ("lis ce fichier") → skill non déclenchée même si la description correspond — le matching n'est pas garanti</text>
+        <!-- Key insight -->
+        <rect x="30" y="264" width="720" height="60" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.5"/>
+        <text x="390" y="286" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Qualité de la description = variable clé</text>
+        <text x="390" y="304" text-anchor="middle" font-size="11" fill="#6B5F57">Une description vague → undertriggering. Les descriptions doivent couvrir explicitement</text>
+        <text x="390" y="318" text-anchor="middle" font-size="11" fill="#6B5F57">les formulations naturelles ("rédige un post", "génère une note", "analyse ce run")</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- S04 -->
+  <section id="s04">
+    <div class="section-head">
+      <span class="num">04</span>
+      <h2>CLAUDE.md vs instructions de projet</h2>
+    </div>
+    <p class="prose">Deux mécanismes distincts selon l'environnement. Confondre les deux génère des attentes incorrectes sur la persistance et la portabilité de la configuration.</p>
+
+    <table>
+      <thead>
+        <tr><th>Critère</th><th>CLAUDE.md (Claude Code)</th><th>Instructions de projet (Chat / Cowork)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Localisation</td><td>Fichier <code>.claude/CLAUDE.md</code> ou racine du repo</td><td>Interface UI — stockées côté Anthropic, liées au projet Chat</td></tr>
+        <tr><td>Versionné dans git</td><td>Oui — fait partie du repo, partageable avec l'équipe</td><td>Non — attaché à l'utilisateur/projet UI, non versionné</td></tr>
+        <tr><td>Chargement</td><td>Automatique à chaque session Claude Code dans ce répertoire</td><td>Injecté automatiquement dans chaque conversation du projet Chat</td></tr>
+        <tr><td>Contenu typique</td><td>Commandes essentielles, architecture, conventions, règles de travail, chemins d'accès</td><td>Ton, style, contexte utilisateur, instructions globales de comportement</td></tr>
+        <tr><td>Portabilité</td><td>Suit le repo — disponible sur toute machine qui clone le projet</td><td>Liée au compte — non portable par le repo</td></tr>
+        <tr><td>Hiérarchie</td><td>CLAUDE.md racine + CLAUDE.md sous-dossiers (scope local)</td><td>Instructions globales (userPreferences) + instructions par projet</td></tr>
+        <tr><td>Référence à des skills</td><td>Possible — chemins locaux vers des fichiers .md d'instructions</td><td>Skills déclenchées via frontmatter, pas via le texte des instructions</td></tr>
+      </tbody>
+    </table>
+
+    <div class="keypoint">
+      <p><strong>Cas concret :</strong> le fichier <code>CLAUDE.md</code> doit se trouver à la racine du projet. Il encode les règles non négociables que l'on souhaite implémenter (conventions de code, architecture, workflow de review). Ces règles suivent le repo et s'appliquent automatiquement dans Claude Code. Elles sont distinctes des instructions de projet configurées dans l'UI Chat qui encodent le ton et le workflow de conversation.</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">CLAUDE.md — exemple de structure</div>
+      <pre><code># Structure CLAUDE.md
+## Project Overview          → contexte général, versions
+## Commandes essentielles    → commandes de build et test
+## Architecture              → couches, modules, conventions
+## Règles de travail         → workflow de review, CI, gestion des branches
+## Discipline lecture        → conventions de lecture du code
+</code></pre>
+    </div>
+  </section>
+
+  <!-- S05 -->
+  <section id="s05">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>Notion de "projet" selon l'environnement</h2>
+    </div>
+    <p class="prose">Le terme "projet" recouvre des réalités différentes dans Chat/Cowork d'un côté, et Claude Code de l'autre.</p>
+
+    <div class="steps">
+      <div class="step navy">
+        <div class="step-num">Chat</div>
+        <div class="step-title">Projet UI</div>
+        <div class="step-desc">Espace créé dans l'interface claude.ai. Regroupe : instructions persistantes, fichiers uploadés, historique des conversations. Accessible depuis n'importe quel appareil (lié au compte). Portée : conversations isolées dans cet espace.</div>
+      </div>
+      <div class="step mid">
+        <div class="step-num">Cowork</div>
+        <div class="step-title">Projet UI (idem Chat)</div>
+        <div class="step-desc">Même notion de projet que Chat — espace avec instructions, fichiers, historique. Cowork y ajoute des capacités agentiques (navigation, desktop). Pas de notion de "projet répertoire" au sens développement.</div>
+      </div>
+      <div class="step accent">
+        <div class="step-num">Claude Code</div>
+        <div class="step-title">Pas de projet UI</div>
+        <div class="step-desc">Aucune notion de projet dans une interface. Le "projet" est le répertoire de travail courant (cwd). La configuration passe par <code>.claude/</code> dans ce répertoire. Pas d'historique de conversations persistant multi-sessions comme dans Chat.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Point d'attention :</strong> on ne peut pas créer un "projet Claude Code" depuis claude.ai. Claude Code est un outil CLI/IDE — il opère sur le filesystem local. La persistance de contexte entre sessions passe par <code>CLAUDE.md</code> et <code>.session-state.md</code>, pas par une interface de projet cloud.
+    </div>
+  </section>
+
+  <!-- S06 -->
+  <section id="s06">
+    <div class="section-head">
+      <span class="num">06</span>
+      <h2>Interfaces Claude Code — terminal vs IDE</h2>
+    </div>
+    <p class="prose">Claude Code peut être utilisé de deux manières, avec des différences d'ergonomie significatives.</p>
+
+    <table>
+      <thead>
+        <tr><th>Mode</th><th>Terminal (CLI)</th><th>IDE — VS Code / JetBrains</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Accès</td><td>Commande <code>claude</code> dans le shell</td><td>Extension VS Code ou fenêtre contextuelle latérale</td></tr>
+        <tr><td>Interaction</td><td>Chat textuel dans le terminal — input/output séquentiel</td><td>Panneau latéral avec accès aux fichiers ouverts, diff inline, contexte de l'éditeur</td></tr>
+        <tr><td>Contexte fichier</td><td>Explicite — il faut passer les fichiers en argument ou via prompt</td><td>Automatique — fichier actif et sélection transmis au contexte</td></tr>
+        <tr><td>Diff / patch</td><td>Affiché dans le terminal, appliqué via commande</td><td>Diff interactif dans l'éditeur — accepter/refuser par bloc</td></tr>
+        <tr><td>Slash commands</td><td>Disponibles — <code>/nom</code> dans le prompt terminal</td><td>Disponibles — palette de commandes ou champ de saisie IDE</td></tr>
+        <tr><td>CLAUDE.md</td><td>Chargé automatiquement depuis le cwd</td><td>Chargé automatiquement depuis le répertoire racine du workspace</td></tr>
+      </tbody>
+    </table>
+
+    <div class="keypoint">
+      <p>Le choix entre les deux modes dépend de la nature de la tâche. Le mode VS Code est adapté aux modifications unitaires : lecture de fichier, diff ciblé, correction localisée. Le terminal convient aux tâches longues ou séquentielles : scripts, sessions autonomes, enchaînements de commandes. Les deux modes lisent le même <code>CLAUDE.md</code> et partagent la même configuration.</p>
+    </div>
+  </section>
+
+  <!-- S07 -->
+  <section id="s07">
+    <div class="section-head">
+      <span class="num">07</span>
+      <h2>Skills, Commands &amp; Extensions dans Claude Code</h2>
+    </div>
+    <p class="prose">Claude Code n'utilise pas le système de plugins/skills de Chat/Cowork. Les mécanismes équivalents sont différents.</p>
+
+    <table>
+      <thead>
+        <tr><th>Besoin</th><th>Chat / Cowork</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Instructions persistantes domaine</td><td>Skill avec <code>SKILL.md</code> + frontmatter</td><td>Section dans <code>CLAUDE.md</code> ou fichier <code>.md</code> référencé depuis <code>CLAUDE.md</code></td></tr>
+        <tr><td>Déclenchement auto par description</td><td>Oui — via frontmatter <code>description:</code></td><td>Non — Claude Code ne parse pas les frontmatters pour matcher des requêtes</td></tr>
+        <tr><td>Slash commands</td><td><code>commands/nom.md</code> dans le plugin</td><td><code>.claude/commands/nom.md</code> — accessible via <code>/nom</code> dans Claude Code</td></tr>
+        <tr><td>Contenu d'un command</td><td>Prompt .md — peut orchestrer des skills</td><td>Prompt .md — peut référencer des sections de CLAUDE.md ou des fichiers locaux</td></tr>
+        <tr><td>Connecteurs / APIs externes</td><td>Connectors dans le plugin (MCP, browser MCP)</td><td>MCP servers configurés dans <code>.claude/settings.json</code> ou <code>~/.claude/settings.json</code></td></tr>
+        <tr><td>Plugins UI (bundle)</td><td>Oui — déployable, zippable</td><td>Non — concept absent. Pas de marketplace de plugins pour Claude Code.</td></tr>
+        <tr><td>Skills Chat dans Claude Code</td><td>N/A</td><td>Non disponibles — le filesystem <code>/mnt/skills/</code> est propre à Chat/Cowork</td></tr>
+      </tbody>
+    </table>
+
+    <div class="diagram">
+      <svg viewBox="0 0 780 300" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#A89E97" stroke-width="1.5" stroke-linecap="round"/>
+          </marker>
+        </defs>
+        <text x="390" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#0D1B2A">Structure .claude/ dans un repo Claude Code</text>
+        <!-- Root -->
+        <rect x="290" y="36" width="200" height="36" rx="8" fill="#E8EAF0" stroke="#4A5480" stroke-width="0.6"/>
+        <text x="390" y="54" text-anchor="middle" font-size="12" font-weight="600" fill="#4A5480">repo-racine/</text>
+        <text x="390" y="67" text-anchor="middle" font-size="10" fill="#C17A5A">répertoire de travail</text>
+        <line x1="390" y1="72" x2="390" y2="96" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a3)"/>
+        <!-- .claude/ -->
+        <rect x="260" y="98" width="260" height="36" rx="8" fill="#F7F4F0" stroke="#0D1B2A" stroke-width="0.6"/>
+        <text x="390" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">.claude/</text>
+        <text x="390" y="129" text-anchor="middle" font-size="10" fill="#6B5F57">dossier de configuration Claude Code</text>
+        <line x1="390" y1="134" x2="390" y2="158" stroke="#A89E97" stroke-width="0.8"/>
+        <line x1="130" y1="158" x2="650" y2="158" stroke="#A89E97" stroke-width="0.8"/>
+        <line x1="130" y1="158" x2="130" y2="178" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a3)"/>
+        <line x1="390" y1="158" x2="390" y2="178" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a3)"/>
+        <line x1="650" y1="158" x2="650" y2="178" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a3)"/>
+        <!-- CLAUDE.md -->
+        <rect x="30" y="180" width="200" height="64" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="130" y="202" text-anchor="middle" font-size="12" font-weight="600" fill="#3A5C42">CLAUDE.md</text>
+        <text x="130" y="218" text-anchor="middle" font-size="10" fill="#6B5F57">Chargé automatiquement</text>
+        <text x="130" y="232" text-anchor="middle" font-size="10" fill="#6B5F57">Instructions + conventions repo</text>
+        <text x="130" y="246" text-anchor="middle" font-size="10" fill="#6B5F57">= système prompt persistant</text>
+        <!-- commands/ -->
+        <rect x="280" y="180" width="220" height="64" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
+        <text x="390" y="202" text-anchor="middle" font-size="12" font-weight="600" fill="#8B4A2F">commands/</text>
+        <text x="390" y="218" text-anchor="middle" font-size="10" fill="#6B5F57">*.md → slash commands</text>
+        <text x="390" y="232" text-anchor="middle" font-size="10" fill="#6B5F57">/nom accessible dans Claude Code</text>
+        <text x="390" y="246" text-anchor="middle" font-size="10" fill="#6B5F57">prompts réutilisables</text>
+        <!-- settings.json -->
+        <rect x="550" y="180" width="200" height="64" rx="8" fill="#E8EAF0" stroke="#4A5480" stroke-width="0.6"/>
+        <text x="650" y="202" text-anchor="middle" font-size="12" font-weight="600" fill="#4A5480">settings.json</text>
+        <text x="650" y="218" text-anchor="middle" font-size="10" fill="#C17A5A">MCP servers déclarés</text>
+        <text x="650" y="232" text-anchor="middle" font-size="10" fill="#C17A5A">= connecteurs externes</text>
+        <text x="650" y="246" text-anchor="middle" font-size="10" fill="#C17A5A">équivalent connectors plugin</text>
+        <text x="390" y="278" text-anchor="middle" font-size="10.5" fill="#A89E97">CLAUDE.md supporté aussi à la racine du repo (sans .claude/)</text>
+      </svg>
+    </div>
+
+    <div class="callout warn">
+      <strong>Important :</strong> skills installées dans Chat/Cowork sont stockées dans un filesystem interne propre à ces environnements, non accessible depuis Claude Code. Pour répliquer le comportement d'une skill dans Claude Code, il faut copier son contenu dans une section de <code>CLAUDE.md</code> ou dans un fichier <code>.md</code> local explicitement référencé (le déclenchement automatique par description n'existe pas dans Claude Code).
+    </div>
+
+    <div class="callout">
+      <strong>MCP servers dans Claude Code :</strong> c'est l'équivalent fonctionnel des connectors de plugin. Déclarés dans <code>.claude/settings.json</code> (scope repo) ou <code>~/.claude/settings.json</code> (scope global utilisateur). Permettent à Claude Code d'appeler des APIs externes, des bases de données, des services tiers — sans passer par l'UI de plugin.
+    </div>
+  </section>
+
+  <!-- S08 -->
+  <section id="s08">
+    <div class="section-head">
+      <span class="num">08</span>
+      <h2>Tableau comparatif — trois environnements</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Fonctionnalité</th><th>Chat</th><th>Cowork</th><th>Claude Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Skills auto-déclenchées</td><td>Oui</td><td>Oui</td><td>Non</td></tr>
+        <tr><td>Slash commands</td><td>Via plugin</td><td>Via plugin</td><td><code>.claude/commands/*.md</code></td></tr>
+        <tr><td>Plugins (bundle UI)</td><td>Oui</td><td>Oui</td><td>Non</td></tr>
+        <tr><td>Connecteurs externes</td><td>Connectors dans plugin</td><td>Connectors dans plugin</td><td>MCP servers dans settings.json</td></tr>
+        <tr><td>Configuration persistante</td><td>Instructions de projet (UI)</td><td>Instructions de projet (UI)</td><td>CLAUDE.md (fichier repo)</td></tr>
+        <tr><td>Versionnable dans git</td><td>Non</td><td>Non</td><td>Oui</td></tr>
+        <tr><td>Notion de projet</td><td>Espace UI (cloud)</td><td>Espace UI (cloud)</td><td>Répertoire local (cwd)</td></tr>
+        <tr><td>Interface visuelle</td><td>Chat web / mobile</td><td>Desktop app agentique</td><td>Terminal + extension VS Code</td></tr>
+        <tr><td>Exécution de code</td><td>Sandbox limité (artifacts)</td><td>Desktop local + navigateur</td><td>Shell local complet</td></tr>
+        <tr><td>Accès filesystem local</td><td>Non (uploads uniquement)</td><td>Oui (desktop)</td><td>Oui (cwd + chemins configurés)</td></tr>
+        <tr><td>Skills /mnt/skills/</td><td>Oui</td><td>Oui</td><td>Non</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- S09 -->
+  <section id="s09">
+    <div class="section-head">
+      <span class="num">09</span>
+      <h2>Choisir le bon environnement selon la tâche</h2>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Environnement</th>
+          <th>Rôle</th>
+          <th>Signal de déclenchement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Chat</td>
+          <td>Contrôle &amp; traçabilité</td>
+          <td>Toute tâche nécessitant validation avant application</td>
+        </tr>
+        <tr>
+          <td>Cowork</td>
+          <td>Tâches autonomes volumineuses</td>
+          <td>Génération multi-fichiers, audit sans validation granulaire</td>
+        </tr>
+        <tr>
+          <td>Claude Code</td>
+          <td>Développement dans le repo</td>
+          <td>Accès filesystem, CLAUDE.md, diffs interactifs IDE</td>
+        </tr>
+        <tr>
+          <td>Terminal</td>
+          <td>Exécution réelle</td>
+          <td>Tests, git, build — Claude propose, Terminal applique</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="keypoint">
+      <p><strong>Règle de routage :</strong> modification avec validation intermédiaire → Chat. Tâche autonome et volumineuse → Cowork. Développement repo → Claude Code. Exécution système → Terminal.</p>
+      <p>Les quatre environnements se complètent — ils ne se substituent pas.</p>
+    </div>
+
+  </section>
+
+  <footer>
+    <span>Skills, Commands, Plugins &amp; Configuration — Écosystème Claude</span>
+    <span>2 avril 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
