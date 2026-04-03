@@ -720,20 +720,22 @@
 
     <table>
       <thead>
-        <tr><th>Mode</th><th>Terminal (CLI)</th><th>IDE — VS Code / JetBrains</th></tr>
+        <tr><th>Critère</th><th>Terminal (CLI)</th><th>IDE (extension)</th></tr>
       </thead>
       <tbody>
-        <tr><td>Accès</td><td>Commande <code>claude</code> dans le shell</td><td>Extension VS Code ou fenêtre contextuelle latérale</td></tr>
-        <tr><td>Interaction</td><td>Chat textuel dans le terminal — input/output séquentiel</td><td>Panneau latéral avec accès aux fichiers ouverts, diff inline, contexte de l'éditeur</td></tr>
-        <tr><td>Contexte fichier</td><td>Explicite — il faut passer les fichiers en argument ou via prompt</td><td>Automatique — fichier actif et sélection transmis au contexte</td></tr>
-        <tr><td>Diff / patch</td><td>Affiché dans le terminal, appliqué via commande</td><td>Diff interactif dans l'éditeur — accepter/refuser par bloc</td></tr>
-        <tr><td>Slash commands</td><td>Disponibles — <code>/nom</code> dans le prompt terminal</td><td>Disponibles — palette de commandes ou champ de saisie IDE</td></tr>
-        <tr><td>CLAUDE.md</td><td>Chargé automatiquement depuis le cwd</td><td>Chargé automatiquement depuis le répertoire racine du workspace</td></tr>
+        <tr><td>Accès</td><td>Commande <code>claude</code> dans le shell</td><td>Extension installée dans l'IDE (VS Code, Cursor, JetBrains…)</td></tr>
+        <tr><td>Contexte fichier</td><td>Explicite — fichiers passés en argument ou via prompt</td><td>Automatique — <code>ide_opened_file</code> et <code>ide_selection</code> transmis au contexte</td></tr>
+        <tr><td>Diff / patch</td><td>Affiché dans le terminal</td><td>Inline dans l'éditeur</td></tr>
+        <tr><td>Slash commands</td><td>Disponibles</td><td>Disponibles</td></tr>
+        <tr><td>CLAUDE.md</td><td>Chargé depuis le cwd</td><td>Chargé depuis la racine du workspace</td></tr>
+        <tr><td>Mode non-interactif</td><td>Oui — pipeable, scriptable, CI/CD</td><td>Non</td></tr>
+        <tr><td>Scripting / automatisation</td><td>Oui — <code>claude --print "..."</code> pipeable</td><td>Non</td></tr>
+        <tr><td>Git, Bash, outils complets</td><td>Oui</td><td>Oui</td></tr>
       </tbody>
     </table>
 
     <div class="keypoint">
-      <p>Le choix entre les deux modes dépend de la nature de la tâche. Le mode VS Code est adapté aux modifications unitaires : lecture de fichier, diff ciblé, correction localisée. Le terminal convient aux tâches longues ou séquentielles : scripts, sessions autonomes, enchaînements de commandes. Les deux modes lisent le même <code>CLAUDE.md</code> et partagent la même configuration.</p>
+      <p>Le choix entre les deux modes dépend de la nature de la tâche. L'extension IDE est adaptée au développement interactif : elle connaît le fichier ouvert et la sélection en temps réel, et affiche les diffs inline. Le CLI convient aux tâches non-interactives : scripts, pipelines, automatisation, CI/CD. Les deux modes lisent le même <code>CLAUDE.md</code> et le même système de plugins/skills.</p>
     </div>
   </section>
 
@@ -750,7 +752,8 @@
         <tr><th>Besoin</th><th>Chat / Cowork</th><th>Claude Code</th></tr>
       </thead>
       <tbody>
-        <tr><td>Instructions persistantes domaine</td><td>Skill avec <code>SKILL.md</code> + frontmatter</td><td>Section dans <code>CLAUDE.md</code> ou fichier <code>.md</code> référencé depuis <code>CLAUDE.md</code></td></tr>
+        <tr><td>Instructions persistantes domaine</td><td>Skill avec <code>SKILL.md</code> + frontmatter</td><td>Fichier <code>SKILL.md</code> dans <code>~/.claude/plugins/</code> (globale) ou <code>&lt;repo&gt;/.claude/plugins/</code> (locale au repo)</td></tr>
+        <tr><td>Portée des skills</td><td>N/A</td><td>Globale (<code>~/.claude/plugins/</code>) ou locale (<code>&lt;repo&gt;/.claude/plugins/</code>)</td></tr>
         <tr><td>Déclenchement auto par description</td><td>Oui — via frontmatter <code>description:</code></td><td>Non — Claude Code ne parse pas les frontmatters pour matcher des requêtes</td></tr>
         <tr><td>Slash commands</td><td><code>commands/nom.md</code> dans le plugin</td><td><code>.claude/commands/nom.md</code> — accessible via <code>/nom</code> dans Claude Code</td></tr>
         <tr><td>Contenu d'un command</td><td>Prompt .md — peut orchestrer des skills</td><td>Prompt .md — peut référencer des sections de CLAUDE.md ou des fichiers locaux</td></tr>
