@@ -199,15 +199,35 @@
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 2rem 1.5rem;
-    overflow-x: auto;
     margin: 1.25rem 0;
+    cursor: zoom-in;
   }
   .diagram svg {
     display: block;
     width: 100%;
-    min-width: 780px;
     max-width: 780px;
     margin: 0 auto;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* ── SVG overlay fullscreen ── */
+  #svg-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(13,27,42,0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    cursor: zoom-out;
+  }
+  #svg-overlay.open { display: flex; }
+  #svg-overlay svg {
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
     font-family: 'Outfit', sans-serif;
   }
 
@@ -864,6 +884,31 @@
   </footer>
 
 </div>
+
+<div id="svg-overlay" role="dialog" aria-modal="true" aria-label="Diagramme agrandi"></div>
+
+<script>
+  (function () {
+    var overlay = document.getElementById('svg-overlay');
+
+    document.querySelectorAll('.diagram').forEach(function (d) {
+      d.addEventListener('click', function () {
+        var clone = d.querySelector('svg').cloneNode(true);
+        overlay.innerHTML = '';
+        overlay.appendChild(clone);
+        overlay.classList.add('open');
+      });
+    });
+
+    overlay.addEventListener('click', function () {
+      overlay.classList.remove('open');
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') overlay.classList.remove('open');
+    });
+  })();
+</script>
 
 </body>
 </html>
