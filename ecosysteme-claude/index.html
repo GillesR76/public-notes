@@ -432,8 +432,6 @@
     <h1>Skills, Commands, Plugins<br>&amp; Configuration dans l'écosystème Claude</h1>
     <div class="header-meta">
       <span class="sub">Architecture complète, distinctions par environnement (Chat, Cowork, Claude Code), CLAUDE.md vs instructions de projet.</span>
-      <span class="meta-right">
-        <span class="date">2 avril 2026</span>
       </span>
     </div>
   </header>
@@ -441,14 +439,14 @@
   <div class="toc">
     <div class="toc-label">Sommaire</div>
     <ol>
-      <li><a href="#s01">Architecture en trois couches — Chat &amp; Cowork</a></li>
-      <li><a href="#s02">Commands — définition précise</a></li>
-      <li><a href="#s03">Déclenchement — auto vs explicite</a></li>
+      <li><a href="#s01">Architecture en trois couches : Chat &amp; Cowork</a></li>
+      <li><a href="#s02">Commands : définition précise</a></li>
+      <li><a href="#s03">Déclenchement : auto vs explicite</a></li>
       <li><a href="#s04">CLAUDE.md vs instructions de projet</a></li>
       <li><a href="#s05">Notion de "projet" selon l'environnement</a></li>
-      <li><a href="#s06">Interfaces Claude Code — terminal vs IDE</a></li>
+      <li><a href="#s06">Interfaces Claude Code : terminal vs IDE</a></li>
       <li><a href="#s07">Skills, Commands &amp; Extensions dans Claude Code</a></li>
-      <li><a href="#s08">Tableau comparatif — trois environnements</a></li>
+      <li><a href="#s08">Tableau comparatif : trois environnements</a></li>
       <li><a href="#s09">Choisir le bon environnement selon la tâche</a></li>
     </ol>
   </div>
@@ -457,9 +455,9 @@
   <section id="s01">
     <div class="section-head">
       <span class="num">01</span>
-      <h2>Architecture en trois couches — Chat &amp; Cowork</h2>
+      <h2>Architecture en trois couches : Chat &amp; Cowork</h2>
     </div>
-    <p class="prose">Dans les interfaces Chat et Cowork, trois couches s'emboîtent. Cette architecture est propre à ces deux environnements — Claude Code a son propre système (voir section 07).</p>
+    <p class="prose">Dans les interfaces Chat et Cowork, trois couches s'emboîtent. Cette architecture est propre à ces deux environnements. Claude Code a son propre système (voir section 07).</p>
 
     <div class="diagram">
       <svg viewBox="0 0 820 475" xmlns="http://www.w3.org/2000/svg">
@@ -471,12 +469,12 @@
         <!-- Plugin container -->
         <rect x="10" y="10" width="800" height="150" rx="14" fill="#E8EAF0" stroke="#4A5480" stroke-width="0.8"/>
         <text x="410" y="38" text-anchor="middle" font-size="14" font-weight="600" fill="#4A5480">Plugin (Chat / Cowork)</text>
-        <text x="410" y="56" text-anchor="middle" font-size="12" fill="#6B5F57">Bundle déployable — stocké localement, partageable en zip ou GitHub</text>
+        <text x="410" y="56" text-anchor="middle" font-size="12" fill="#6B5F57">Bundle déployable. Stocké localement, partageable en zip ou GitHub</text>
         <!-- Skills -->
         <rect x="30" y="70" width="220" height="80" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
         <text x="140" y="110" text-anchor="middle" fill="#3A5C42">
           <tspan x="140" y="93" dominant-baseline="central" font-size="13" font-weight="600">Skills</tspan>
-          <tspan x="140" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">SKILL.md — expertise domaine</tspan>
+          <tspan x="140" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">SKILL.md : expertise domaine</tspan>
           <tspan x="140" y="127" dominant-baseline="central" font-size="11" fill="#6B5F57">auto-déclenchées par description</tspan>
         </text>
         <!-- Connectors -->
@@ -490,7 +488,7 @@
         <rect x="510" y="70" width="280" height="80" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
         <text x="650" y="110" text-anchor="middle" fill="#8B4A2F">
           <tspan x="650" y="93" dominant-baseline="central" font-size="13" font-weight="600">Commands (slash)</tspan>
-          <tspan x="650" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">Prompts réutilisables — /nom</tspan>
+          <tspan x="650" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">Prompts réutilisables (/nom)</tspan>
           <tspan x="650" y="127" dominant-baseline="central" font-size="11" fill="#6B5F57">peuvent orchestrer N skills</tspan>
         </text>
         <!-- Arrows -->
@@ -528,7 +526,7 @@
         <rect x="478" y="236" width="314" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
         <text x="635" y="256" text-anchor="middle" fill="#0D1B2A">
           <tspan x="635" y="249" dominant-baseline="central" font-size="12" font-weight="600">Fichier .md</tspan>
-          <tspan x="635" y="263" dominant-baseline="central" font-size="11" fill="#6B5F57">prompt réutilisable — tâche nommée</tspan>
+          <tspan x="635" y="263" dominant-baseline="central" font-size="11" fill="#6B5F57">prompt réutilisable - tâche nommée</tspan>
         </text>
         <rect x="478" y="284" width="314" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
         <text x="635" y="304" text-anchor="middle" fill="#0D1B2A">
@@ -541,7 +539,7 @@
           <tspan x="635" y="359" dominant-baseline="central" font-size="11" fill="#6B5F57">/repurposing, /call-prep, /release…</tspan>
         </text>
         <text x="635" y="392" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Cowork : commands/ du plugin</text>
-        <text x="635" y="408" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Code : .claude/commands/ — voir §07</text>
+        <text x="635" y="408" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Code : .claude/commands/ (voir §07)</text>
       </svg>
     </div>
 
@@ -556,21 +554,21 @@
   <section id="s02">
     <div class="section-head">
       <span class="num">02</span>
-      <h2>Commands — définition précise</span></h2>
+      <h2>Commands : définition précise</span></h2>
     </div>
-    <p class="prose">Un command est un fichier <code>.md</code> stocké dans <code>commands/</code> qui encapsule une tâche nommée, déclenchable via <code>/nom</code>. Son contenu est du langage naturel décrivant la tâche à accomplir — il peut être aussi simple qu'un paragraphe, ou aussi structuré qu'une séquence ordonnée invoquant plusieurs skills. Le slash command est le mécanisme de déclenchement ; l'orchestration de skills est un usage avancé, non une propriété intrinsèque.</p>
+    <p class="prose">Un command est un fichier <code>.md</code> stocké dans <code>commands/</code> qui encapsule une tâche nommée, déclenchable via <code>/nom</code>. Son contenu est du langage naturel décrivant la tâche à accomplir. Il peut être aussi simple qu'un paragraphe, ou aussi structuré qu'une séquence ordonnée invoquant plusieurs skills. Le slash command est le mécanisme de déclenchement ; l'orchestration de skills est un usage avancé, non une propriété intrinsèque.</p>
 
     <table>
       <thead>
         <tr><th>Propriété</th><th>Valeur</th></tr>
       </thead>
       <tbody>
-        <tr><td>Format</td><td>Fichier <code>.md</code> — contenu en langage naturel / markdown</td></tr>
+        <tr><td>Format</td><td>Fichier <code>.md</code> - contenu en langage naturel / markdown</td></tr>
         <tr><td>Déclenchement</td><td>Slash command explicite : <code>/nom-du-command</code></td></tr>
-        <tr><td>Contenu minimal</td><td>Prompt décrivant une tâche — sans référence à des skills</td></tr>
+        <tr><td>Contenu minimal</td><td>Prompt décrivant une tâche - sans référence à des skills</td></tr>
         <tr><td>Contenu avancé</td><td>Prompt qui invoque explicitement skill A, puis skill B, puis skill C en séquence</td></tr>
         <tr><td>Localisation Chat/Cowork</td><td><code>commands/</code> dans le dossier plugin</td></tr>
-        <tr><td>Localisation Claude Code</td><td><code>.claude/commands/nom.md</code> — voir section 07</td></tr>
+        <tr><td>Localisation Claude Code</td><td><code>.claude/commands/nom.md</code> (voir section 07)</td></tr>
         <tr><td>Disponibilité sans plugin</td><td>Chat/Cowork : non (doit être dans un plugin). Claude Code : oui (dossier local).</td></tr>
       </tbody>
     </table>
@@ -584,7 +582,7 @@
   <section id="s03">
     <div class="section-head">
       <span class="num">03</span>
-      <h2>Déclenchement — auto vs explicite (Chat &amp; Cowork)</h2>
+      <h2>Déclenchement : auto vs explicite (Chat &amp; Cowork)</h2>
     </div>
     <p class="prose">Le déclenchement d'une skill repose sur la correspondance entre la requête de l'utilisateur et la description dans le frontmatter <code>SKILL.md</code>. Le déclenchement d'un command est toujours explicite.</p>
 
@@ -623,12 +621,12 @@
         <rect x="420" y="142" width="330" height="64" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
         <text x="585" y="174" text-anchor="middle" fill="#6B5F57">
           <tspan x="585" y="160" dominant-baseline="central" font-size="11">/repurposing → command chargé</tspan>
-          <tspan x="585" y="174" dominant-baseline="central" font-size="11">/linkedin-writer → skill directement</tspan>
+          <tspan x="585" y="174" dominant-baseline="central" font-size="11">/nom-du-skill → skill directement</tspan>
           <tspan x="585" y="188" dominant-baseline="central" font-size="11" font-weight="500">→ command peut chaîner N skills</tspan>
         </text>
         <!-- Warning callout -->
         <rect x="30" y="220" width="720" height="32" rx="6" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.5"/>
-        <text x="390" y="240" text-anchor="middle" font-size="11" fill="#6B5F57">Requête générique ("lis ce fichier") → skill non déclenchée même si la description correspond — le matching n'est pas garanti</text>
+        <text x="390" y="240" text-anchor="middle" font-size="11" fill="#6B5F57">Requête générique ("lis ce fichier") → skill non déclenchée même si la description correspond (le matching n'est pas garanti)</text>
         <!-- Key insight -->
         <rect x="30" y="268" width="720" height="64" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.5"/>
         <text x="390" y="300" text-anchor="middle" fill="#0D1B2A">
@@ -653,13 +651,13 @@
         <tr><th>Critère</th><th>CLAUDE.md (Claude Code)</th><th>Instructions de projet (Chat / Cowork)</th></tr>
       </thead>
       <tbody>
-        <tr><td>Localisation</td><td>Fichier <code>.claude/CLAUDE.md</code> ou racine du repo</td><td>Interface UI — stockées côté Anthropic, liées au projet Chat</td></tr>
-        <tr><td>Versionné dans git</td><td>Oui — fait partie du repo, partageable avec l'équipe</td><td>Non — attaché à l'utilisateur/projet UI, non versionné</td></tr>
+        <tr><td>Localisation</td><td>Fichier <code>.claude/CLAUDE.md</code> ou racine du repo</td><td>Interface UI (stockées côté Anthropic, liées au projet Chat)</td></tr>
+        <tr><td>Versionné dans git</td><td>Oui : fait partie du repo, partageable avec l'équipe</td><td>Non : attaché à l'utilisateur/projet UI, non versionné</td></tr>
         <tr><td>Chargement</td><td>Automatique à chaque session Claude Code dans ce répertoire</td><td>Injecté automatiquement dans chaque conversation du projet Chat</td></tr>
         <tr><td>Contenu typique</td><td>Commandes essentielles, architecture, conventions, règles de travail, chemins d'accès</td><td>Ton, style, contexte utilisateur, instructions globales de comportement</td></tr>
-        <tr><td>Portabilité</td><td>Suit le repo — disponible sur toute machine qui clone le projet</td><td>Liée au compte — non portable par le repo</td></tr>
+        <tr><td>Portabilité</td><td>Suit le repo : disponible sur toute machine qui clone le projet</td><td>Liée au compte (non portable par le repo)</td></tr>
         <tr><td>Hiérarchie</td><td>CLAUDE.md racine + CLAUDE.md sous-dossiers (scope local)</td><td>Instructions globales (userPreferences) + instructions par projet</td></tr>
-        <tr><td>Référence à des skills</td><td>Possible — chemins locaux vers des fichiers .md d'instructions</td><td>Skills déclenchées via frontmatter, pas via le texte des instructions</td></tr>
+        <tr><td>Référence à des skills</td><td>Possible : chemins locaux vers des fichiers .md d'instructions</td><td>Skills déclenchées via frontmatter, pas via le texte des instructions</td></tr>
       </tbody>
     </table>
 
@@ -668,7 +666,7 @@
     </div>
 
     <div class="code-block">
-      <div class="code-label">CLAUDE.md — exemple de structure</div>
+      <div class="code-label">CLAUDE.md (exemple de structure)</div>
       <pre><code># Structure CLAUDE.md
 ## Project Overview          → contexte général, versions
 ## Commandes essentielles    → commandes de build et test
@@ -696,7 +694,7 @@
       <div class="step mid">
         <div class="step-num">Cowork</div>
         <div class="step-title">Projet UI (idem Chat)</div>
-        <div class="step-desc">Même notion de projet que Chat — espace avec instructions, fichiers, historique. Cowork y ajoute des capacités agentiques (navigation, desktop). Pas de notion de "projet répertoire" au sens développement.</div>
+        <div class="step-desc">Même notion de projet que Chat : espace avec instructions, fichiers, historique. Cowork y ajoute des capacités agentiques (navigation, desktop). Pas de notion de "projet répertoire" au sens développement.</div>
       </div>
       <div class="step accent">
         <div class="step-num">Claude Code</div>
@@ -706,7 +704,7 @@
     </div>
 
     <div class="callout">
-      <strong>Point d'attention :</strong> on ne peut pas créer un "projet Claude Code" depuis claude.ai. Claude Code est un outil CLI/IDE — il opère sur le filesystem local. La persistance de contexte entre sessions passe par <code>CLAUDE.md</code> et <code>.session-state.md</code>, pas par une interface de projet cloud.
+      <strong>Point d'attention :</strong> on ne peut pas créer un "projet Claude Code" depuis claude.ai. Claude Code est un outil CLI/IDE, il opère sur le filesystem local. La persistance de contexte entre sessions passe par <code>CLAUDE.md</code> et <code>.session-state.md</code>, pas par une interface de projet cloud.
     </div>
   </section>
 
@@ -714,7 +712,7 @@
   <section id="s06">
     <div class="section-head">
       <span class="num">06</span>
-      <h2>Interfaces Claude Code — terminal vs IDE</h2>
+      <h2>Interfaces Claude Code : terminal vs IDE</h2>
     </div>
     <p class="prose">Claude Code peut être utilisé de deux manières, avec des différences d'ergonomie significatives.</p>
 
@@ -724,12 +722,12 @@
       </thead>
       <tbody>
         <tr><td>Accès</td><td>Commande <code>claude</code> dans le shell</td><td>Extension installée dans l'IDE (VS Code, Cursor, JetBrains…)</td></tr>
-        <tr><td>Contexte fichier</td><td>Explicite — fichiers passés en argument ou via prompt</td><td>Automatique — <code>ide_opened_file</code> et <code>ide_selection</code> transmis au contexte</td></tr>
+        <tr><td>Contexte fichier</td><td>Explicite : fichiers passés en argument ou via prompt</td><td>Automatique : <code>ide_opened_file</code> et <code>ide_selection</code> transmis au contexte</td></tr>
         <tr><td>Diff / patch</td><td>Affiché dans le terminal</td><td>Inline dans l'éditeur</td></tr>
         <tr><td>Slash commands</td><td>Disponibles</td><td>Disponibles</td></tr>
         <tr><td>CLAUDE.md</td><td>Chargé depuis le cwd</td><td>Chargé depuis la racine du workspace</td></tr>
-        <tr><td>Mode non-interactif</td><td>Oui — pipeable, scriptable, CI/CD</td><td>Non</td></tr>
-        <tr><td>Scripting / automatisation</td><td>Oui — <code>claude --print "..."</code> pipeable</td><td>Non</td></tr>
+        <tr><td>Mode non-interactif</td><td>Oui : pipeable, scriptable, CI/CD</td><td>Non</td></tr>
+        <tr><td>Scripting / automatisation</td><td>Oui : <code>claude --print "..."</code> pipeable</td><td>Non</td></tr>
         <tr><td>Git, Bash, outils complets</td><td>Oui</td><td>Oui</td></tr>
       </tbody>
     </table>
@@ -754,12 +752,12 @@
       <tbody>
         <tr><td>Instructions persistantes domaine</td><td>Skill avec <code>SKILL.md</code> + frontmatter</td><td>Fichier <code>SKILL.md</code> dans <code>~/.claude/plugins/</code> (globale) ou <code>&lt;repo&gt;/.claude/plugins/</code> (locale au repo)</td></tr>
         <tr><td>Portée des skills</td><td>N/A</td><td>Globale (<code>~/.claude/plugins/</code>) ou locale (<code>&lt;repo&gt;/.claude/plugins/</code>)</td></tr>
-        <tr><td>Déclenchement auto par description</td><td>Oui — via frontmatter <code>description:</code></td><td>Non — Claude Code ne parse pas les frontmatters pour matcher des requêtes</td></tr>
-        <tr><td>Slash commands</td><td><code>commands/nom.md</code> dans le plugin</td><td><code>.claude/commands/nom.md</code> — accessible via <code>/nom</code> dans Claude Code</td></tr>
-        <tr><td>Contenu d'un command</td><td>Prompt .md — peut orchestrer des skills</td><td>Prompt .md — peut référencer des sections de CLAUDE.md ou des fichiers locaux</td></tr>
+        <tr><td>Déclenchement auto par description</td><td>Oui : via frontmatter <code>description:</code></td><td>Non : Claude Code ne parse pas les frontmatters pour matcher des requêtes</td></tr>
+        <tr><td>Slash commands</td><td><code>commands/nom.md</code> dans le plugin</td><td><code>.claude/commands/nom.md</code> : accessible via <code>/nom</code> dans Claude Code</td></tr>
+        <tr><td>Contenu d'un command</td><td>Prompt .md : peut orchestrer des skills</td><td>Prompt .md : peut référencer des sections de CLAUDE.md ou des fichiers locaux</td></tr>
         <tr><td>Connecteurs / APIs externes</td><td>Connectors dans le plugin (MCP, browser MCP)</td><td>MCP servers configurés dans <code>.claude/settings.json</code> ou <code>~/.claude/settings.json</code></td></tr>
-        <tr><td>Plugins UI (bundle)</td><td>Oui — déployable, zippable</td><td>Non — concept absent. Pas de marketplace de plugins pour Claude Code.</td></tr>
-        <tr><td>Skills Chat dans Claude Code</td><td>N/A</td><td>Non disponibles — le filesystem <code>/mnt/skills/</code> est propre à Chat/Cowork</td></tr>
+        <tr><td>Plugins UI (bundle)</td><td>Oui : déployable, zippable</td><td>Non : concept absent. Pas de marketplace de plugins pour Claude Code.</td></tr>
+        <tr><td>Skills Chat dans Claude Code</td><td>N/A</td><td>Non disponibles : le filesystem <code>/mnt/skills/</code> est propre à Chat/Cowork</td></tr>
       </tbody>
     </table>
 
@@ -812,7 +810,7 @@
     </div>
 
     <div class="callout">
-      <strong>MCP servers dans Claude Code :</strong> c'est l'équivalent fonctionnel des connectors de plugin. Déclarés dans <code>.claude/settings.json</code> (scope repo) ou <code>~/.claude/settings.json</code> (scope global utilisateur). Permettent à Claude Code d'appeler des APIs externes, des bases de données, des services tiers — sans passer par l'UI de plugin.
+      <strong>MCP servers dans Claude Code :</strong> c'est l'équivalent fonctionnel des connectors de plugin. Déclarés dans <code>.claude/settings.json</code> (scope repo) ou <code>~/.claude/settings.json</code> (scope global utilisateur). Permettent à Claude Code d'appeler des APIs externes, des bases de données, des services tiers (sans passer par l'UI de plugin).
     </div>
   </section>
 
@@ -820,7 +818,7 @@
   <section id="s08">
     <div class="section-head">
       <span class="num">08</span>
-      <h2>Tableau comparatif — trois environnements</h2>
+      <h2>Tableau comparatif : trois environnements</h2>
     </div>
 
     <table>
@@ -877,21 +875,20 @@
         <tr>
           <td>Terminal</td>
           <td>Exécution réelle</td>
-          <td>Tests, git, build — Claude propose, Terminal applique</td>
+          <td>Tests, git, build : Claude propose, Terminal applique</td>
         </tr>
       </tbody>
     </table>
 
     <div class="keypoint">
       <p><strong>Règle de routage :</strong> modification avec validation intermédiaire → Chat. Tâche autonome et volumineuse → Cowork. Développement repo → Claude Code. Exécution système → Terminal.</p>
-      <p>Les quatre environnements se complètent — ils ne se substituent pas.</p>
+      <p>Les quatre environnements se complètent, ils ne se substituent pas.</p>
     </div>
 
   </section>
 
   <footer>
     <span>Skills, Commands, Plugins &amp; Configuration — Écosystème Claude</span>
-    <span>2 avril 2026</span>
   </footer>
 
 </div>
