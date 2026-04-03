@@ -6,6 +6,7 @@
 <title>Skills, Commands, Plugins & Configuration — Écosystème Claude v2</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  @font-face { font-display: block; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -443,55 +444,75 @@
         <text x="410" y="38" text-anchor="middle" font-size="14" font-weight="600" fill="#4A5480">Plugin (Chat / Cowork)</text>
         <text x="410" y="56" text-anchor="middle" font-size="12" fill="#6B5F57">Bundle déployable — stocké localement, partageable en zip ou GitHub</text>
         <!-- Skills -->
-        <rect x="30" y="70" width="220" height="74" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
-        <text x="140" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Skills</text>
-        <text x="140" y="114" text-anchor="middle" font-size="11" fill="#6B5F57">SKILL.md — expertise domaine</text>
-        <text x="140" y="130" text-anchor="middle" font-size="11" fill="#6B5F57">auto-déclenchées par description</text>
+        <rect x="30" y="70" width="220" height="80" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="140" y="110" text-anchor="middle" fill="#3A5C42">
+          <tspan x="140" y="93" dominant-baseline="central" font-size="13" font-weight="600">Skills</tspan>
+          <tspan x="140" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">SKILL.md — expertise domaine</tspan>
+          <tspan x="140" y="127" dominant-baseline="central" font-size="11" fill="#6B5F57">auto-déclenchées par description</tspan>
+        </text>
         <!-- Connectors -->
-        <rect x="270" y="70" width="220" height="74" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
-        <text x="380" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Connectors</text>
-        <text x="380" y="114" text-anchor="middle" font-size="11" fill="#6B5F57">MCP servers, browser MCP</text>
-        <text x="380" y="130" text-anchor="middle" font-size="11" fill="#6B5F57">fichiers locaux, APIs</text>
+        <rect x="270" y="70" width="220" height="80" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="380" y="110" text-anchor="middle" fill="#3A5C42">
+          <tspan x="380" y="93" dominant-baseline="central" font-size="13" font-weight="600">Connectors</tspan>
+          <tspan x="380" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">MCP servers, browser MCP</tspan>
+          <tspan x="380" y="127" dominant-baseline="central" font-size="11" fill="#6B5F57">fichiers locaux, APIs</tspan>
+        </text>
         <!-- Commands -->
-        <rect x="510" y="70" width="280" height="74" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
-        <text x="650" y="98" text-anchor="middle" font-size="13" font-weight="600" fill="#8B4A2F">Commands (slash)</text>
-        <text x="650" y="114" text-anchor="middle" font-size="11" fill="#6B5F57">Prompts réutilisables — /nom</text>
-        <text x="650" y="130" text-anchor="middle" font-size="11" fill="#6B5F57">peuvent orchestrer N skills</text>
+        <rect x="510" y="70" width="280" height="80" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
+        <text x="650" y="110" text-anchor="middle" fill="#8B4A2F">
+          <tspan x="650" y="93" dominant-baseline="central" font-size="13" font-weight="600">Commands (slash)</tspan>
+          <tspan x="650" y="110" dominant-baseline="central" font-size="11" fill="#6B5F57">Prompts réutilisables — /nom</tspan>
+          <tspan x="650" y="127" dominant-baseline="central" font-size="11" fill="#6B5F57">peuvent orchestrer N skills</tspan>
+        </text>
         <!-- Arrows -->
-        <line x1="140" y1="160" x2="140" y2="195" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a1)"/>
-        <line x1="650" y1="160" x2="650" y2="195" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a1)"/>
+        <line x1="140" y1="166" x2="140" y2="195" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a1)"/>
+        <line x1="650" y1="166" x2="650" y2="195" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a1)"/>
         <text x="410" y="190" text-anchor="middle" font-size="10.5" fill="#A89E97">Zoom sur les deux composants clés</text>
         <!-- Skill anatomy -->
         <rect x="10" y="200" width="360" height="220" rx="12" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
         <text x="190" y="226" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Anatomie d'une skill</text>
         <rect x="28" y="236" width="324" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="190" y="252" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">SKILL.md</text>
-        <text x="190" y="267" text-anchor="middle" font-size="11" fill="#6B5F57">frontmatter description + instructions</text>
+        <text x="190" y="256" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="190" y="249" dominant-baseline="central" font-size="12" font-weight="600">SKILL.md</tspan>
+          <tspan x="190" y="263" dominant-baseline="central" font-size="11" fill="#6B5F57">frontmatter description + instructions</tspan>
+        </text>
         <rect x="28" y="284" width="155" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="106" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#0D1B2A">References/</text>
-        <text x="106" y="314" text-anchor="middle" font-size="10" fill="#6B5F57">exemples, docs</text>
+        <text x="106" y="304" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="106" y="297" dominant-baseline="central" font-size="11" font-weight="600">References/</tspan>
+          <tspan x="106" y="311" dominant-baseline="central" font-size="10" fill="#6B5F57">exemples, docs</tspan>
+        </text>
         <rect x="192" y="284" width="160" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="272" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#0D1B2A">Scripts/</text>
-        <text x="272" y="314" text-anchor="middle" font-size="10" fill="#6B5F57">code exécutable</text>
+        <text x="272" y="304" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="272" y="297" dominant-baseline="central" font-size="11" font-weight="600">Scripts/</tspan>
+          <tspan x="272" y="311" dominant-baseline="central" font-size="10" fill="#6B5F57">code exécutable</tspan>
+        </text>
         <rect x="28" y="332" width="324" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="190" y="348" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Sub-agents (optionnel)</text>
-        <text x="190" y="362" text-anchor="middle" font-size="11" fill="#6B5F57">exécution isolée en contexte fork</text>
-        <text x="190" y="392" text-anchor="middle" font-size="11" fill="#6B5F57">Déclenchement auto par correspondance description</text>
-        <text x="190" y="408" text-anchor="middle" font-size="11" fill="#6B5F57">OU déclenchement explicite /slash</text>
+        <text x="190" y="352" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="190" y="345" dominant-baseline="central" font-size="12" font-weight="600">Sub-agents (optionnel)</tspan>
+          <tspan x="190" y="359" dominant-baseline="central" font-size="11" fill="#6B5F57">exécution isolée en contexte fork</tspan>
+        </text>
+        <text x="190" y="396" text-anchor="middle" font-size="11" fill="#6B5F57">Déclenchement auto par correspondance description</text>
+        <text x="190" y="412" text-anchor="middle" font-size="11" fill="#6B5F57">OU déclenchement explicite /slash</text>
         <!-- Command anatomy -->
         <rect x="460" y="200" width="350" height="220" rx="12" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
         <text x="635" y="226" text-anchor="middle" font-size="13" font-weight="600" fill="#8B4A2F">Anatomie d'un command</text>
         <rect x="478" y="236" width="314" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="635" y="252" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Fichier .md</text>
-        <text x="635" y="267" text-anchor="middle" font-size="11" fill="#6B5F57">prompt réutilisable — tâche nommée</text>
+        <text x="635" y="256" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="635" y="249" dominant-baseline="central" font-size="12" font-weight="600">Fichier .md</tspan>
+          <tspan x="635" y="263" dominant-baseline="central" font-size="11" fill="#6B5F57">prompt réutilisable — tâche nommée</tspan>
+        </text>
         <rect x="478" y="284" width="314" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="635" y="300" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Peut invoquer skill A → skill B → skill C</text>
-        <text x="635" y="315" text-anchor="middle" font-size="11" fill="#6B5F57">orchestration optionnelle</text>
+        <text x="635" y="304" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="635" y="297" dominant-baseline="central" font-size="12" font-weight="600">Peut invoquer skill A → skill B → skill C</tspan>
+          <tspan x="635" y="311" dominant-baseline="central" font-size="11" fill="#6B5F57">orchestration optionnelle</tspan>
+        </text>
         <rect x="478" y="332" width="314" height="40" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="635" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Slash command</text>
-        <text x="635" y="352" text-anchor="middle" font-size="11" fill="#6B5F57">/repurposing, /call-prep, /release…</text>
-        <text x="635" y="388" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Cowork : commands/ du plugin</text>
-        <text x="635" y="404" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Code : .claude/commands/ — voir §07</text>
+        <text x="635" y="352" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="635" y="345" dominant-baseline="central" font-size="12" font-weight="600">Slash command</tspan>
+          <tspan x="635" y="359" dominant-baseline="central" font-size="11" fill="#6B5F57">/repurposing, /call-prep, /release…</tspan>
+        </text>
+        <text x="635" y="392" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Cowork : commands/ du plugin</text>
+        <text x="635" y="408" text-anchor="middle" font-size="11" fill="#6B5F57">Claude Code : .claude/commands/ — voir §07</text>
       </svg>
     </div>
 
@@ -547,35 +568,45 @@
         </defs>
         <text x="390" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="#0D1B2A">Deux chemins de déclenchement</text>
         <!-- Auto -->
-        <rect x="30" y="44" width="330" height="64" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
-        <text x="195" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#3A5C42">Déclenchement automatique</text>
-        <text x="195" y="86" text-anchor="middle" font-size="11" fill="#6B5F57">Requête en langage naturel</text>
-        <text x="195" y="100" text-anchor="middle" font-size="11" fill="#6B5F57">Claude matche la description de la skill</text>
+        <rect x="30" y="44" width="330" height="72" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.6"/>
+        <text x="195" y="80" text-anchor="middle" fill="#3A5C42">
+          <tspan x="195" y="63" dominant-baseline="central" font-size="13" font-weight="600">Déclenchement automatique</tspan>
+          <tspan x="195" y="80" dominant-baseline="central" font-size="11" fill="#6B5F57">Requête en langage naturel</tspan>
+          <tspan x="195" y="97" dominant-baseline="central" font-size="11" fill="#6B5F57">Claude matche la description de la skill</tspan>
+        </text>
         <!-- Explicit -->
-        <rect x="420" y="44" width="330" height="64" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
-        <text x="585" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#8B4A2F">Déclenchement explicite</text>
-        <text x="585" y="86" text-anchor="middle" font-size="11" fill="#6B5F57">/nom-du-command</text>
-        <text x="585" y="100" text-anchor="middle" font-size="11" fill="#6B5F57">ou appel explicite d'une skill dans le prompt</text>
+        <rect x="420" y="44" width="330" height="72" rx="8" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.6"/>
+        <text x="585" y="80" text-anchor="middle" fill="#8B4A2F">
+          <tspan x="585" y="63" dominant-baseline="central" font-size="13" font-weight="600">Déclenchement explicite</tspan>
+          <tspan x="585" y="80" dominant-baseline="central" font-size="11" fill="#6B5F57">/nom-du-command</tspan>
+          <tspan x="585" y="97" dominant-baseline="central" font-size="11" fill="#6B5F57">ou appel explicite d'une skill dans le prompt</tspan>
+        </text>
         <!-- Arrows -->
-        <line x1="195" y1="108" x2="195" y2="140" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a2)"/>
-        <line x1="585" y1="108" x2="585" y2="140" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a2)"/>
+        <line x1="195" y1="116" x2="195" y2="140" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a2)"/>
+        <line x1="585" y1="116" x2="585" y2="140" stroke="#A89E97" stroke-width="0.8" marker-end="url(#a2)"/>
         <!-- Examples auto -->
-        <rect x="30" y="142" width="330" height="56" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="195" y="180" text-anchor="middle" font-size="11" fill="#6B5F57">"peux tu analyser ce document et me faire une note de synthèse"</text>
-        <text x="195" y="196" text-anchor="middle" font-size="11" font-weight="500" fill="#6B5F57">→ skills chargées si description correspond</text>
+        <rect x="30" y="142" width="330" height="64" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="195" y="174" text-anchor="middle" fill="#6B5F57">
+          <tspan x="195" y="167" dominant-baseline="central" font-size="11">"peux tu analyser ce document et me faire une note de synthèse"</tspan>
+          <tspan x="195" y="181" dominant-baseline="central" font-size="11" font-weight="500">→ skills chargées si description correspond</tspan>
+        </text>
         <!-- Examples explicit -->
-        <rect x="420" y="142" width="330" height="56" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
-        <text x="585" y="164" text-anchor="middle" font-size="11" fill="#6B5F57">/repurposing → command chargé</text>
-        <text x="585" y="180" text-anchor="middle" font-size="11" fill="#6B5F57">/linkedin-writer → skill directement</text>
-        <text x="585" y="196" text-anchor="middle" font-size="11" font-weight="500" fill="#6B5F57">→ command peut chaîner N skills</text>
+        <rect x="420" y="142" width="330" height="64" rx="6" fill="white" stroke="#E2DDD8" stroke-width="0.5"/>
+        <text x="585" y="174" text-anchor="middle" fill="#6B5F57">
+          <tspan x="585" y="160" dominant-baseline="central" font-size="11">/repurposing → command chargé</tspan>
+          <tspan x="585" y="174" dominant-baseline="central" font-size="11">/linkedin-writer → skill directement</tspan>
+          <tspan x="585" y="188" dominant-baseline="central" font-size="11" font-weight="500">→ command peut chaîner N skills</tspan>
+        </text>
         <!-- Warning callout -->
-        <rect x="30" y="218" width="720" height="28" rx="6" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.5"/>
-        <text x="390" y="236" text-anchor="middle" font-size="11" fill="#6B5F57">Requête générique ("lis ce fichier") → skill non déclenchée même si la description correspond — le matching n'est pas garanti</text>
+        <rect x="30" y="220" width="720" height="32" rx="6" fill="#FDF6F0" stroke="#C17A5A" stroke-width="0.5"/>
+        <text x="390" y="240" text-anchor="middle" font-size="11" fill="#6B5F57">Requête générique ("lis ce fichier") → skill non déclenchée même si la description correspond — le matching n'est pas garanti</text>
         <!-- Key insight -->
-        <rect x="30" y="264" width="720" height="60" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.5"/>
-        <text x="390" y="286" text-anchor="middle" font-size="12" font-weight="600" fill="#0D1B2A">Qualité de la description = variable clé</text>
-        <text x="390" y="304" text-anchor="middle" font-size="11" fill="#6B5F57">Une description vague → undertriggering. Les descriptions doivent couvrir explicitement</text>
-        <text x="390" y="318" text-anchor="middle" font-size="11" fill="#6B5F57">les formulations naturelles ("rédige un post", "génère une note", "analyse ce run")</text>
+        <rect x="30" y="268" width="720" height="64" rx="8" fill="#E8F0EA" stroke="#3A5C42" stroke-width="0.5"/>
+        <text x="390" y="300" text-anchor="middle" fill="#0D1B2A">
+          <tspan x="390" y="284" dominant-baseline="central" font-size="12" font-weight="600">Qualité de la description = variable clé</tspan>
+          <tspan x="390" y="300" dominant-baseline="central" font-size="11" fill="#6B5F57">Une description vague → undertriggering. Les descriptions doivent couvrir explicitement</tspan>
+          <tspan x="390" y="316" dominant-baseline="central" font-size="11" fill="#6B5F57">les formulations naturelles ("rédige un post", "génère une note", "analyse ce run")</tspan>
+        </text>
       </svg>
     </div>
   </section>
